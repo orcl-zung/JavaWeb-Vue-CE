@@ -44,10 +44,10 @@
         <div class="item">
           <span>购买时间：</span>
           <el-select v-model="time" placeholder="购买时间">
-            <el-option label="半小时以内" value="半小时以内"></el-option>
-            <el-option label="半小时~一小时" value="半小时~一小时"></el-option>
-            <el-option label="一小时~两小时" value="一小时~两小时"></el-option>
-            <el-option label="两小时以上" value="两小时以上"></el-option>
+            <el-option label="30min以内" value="30min以内"></el-option>
+            <el-option label="30min-1h" value="30min-1h"></el-option>
+            <el-option label="1h-2h" value="1h-2h"></el-option>
+            <el-option label="2h以上" value="2h以上"></el-option>
           </el-select>
         </div>
       </div>

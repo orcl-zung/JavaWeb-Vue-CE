@@ -8,16 +8,16 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="备注信息">
-      <el-input type="textarea" :rows="12" placeholder="请输入内容" v-model="form.note"></el-input>
+      <el-input type="textarea" :rows="12" placeholder="请输入备注信息" v-model="form.note"></el-input>
     </el-form-item>
     <el-form-item label="排队地址">
-      <el-input placeholder="请输入" v-model="form.region" clearable></el-input>
+      <el-input placeholder="请输入排队地址" v-model="form.region" clearable></el-input>
     </el-form-item>
     <el-form-item label="备注地址">
-      <el-input placeholder="请输入" v-model="form.place" clearable></el-input>
+      <el-input placeholder="请输入备注地址" v-model="form.place" clearable></el-input>
     </el-form-item>
     <el-form-item label="联系电话">
-      <el-input placeholder="请输入" v-model="form.phone" clearable></el-input>
+      <el-input placeholder="请输入联系电话" v-model="form.phone" clearable></el-input>
     </el-form-item>
     <div class="bottom">
         <el-form-item label="排队时间">
@@ -25,10 +25,10 @@
         </el-form-item>
         <el-form-item label="排队时长">
           <el-select v-model="form.timeCount" placeholder="请选择排队时长">
-            <el-option label="半小时以内" value="半小时以内"></el-option>
-            <el-option label="半小时~一小时" value="半小时~一小时"></el-option>
-            <el-option label="一小时~两小时" value="一小时~两小时"></el-option>
-            <el-option label="两小时以上" value="两小时以上"></el-option>
+            <el-option label="30min以内" value="30min以内"></el-option>
+            <el-option label="30min-1h" value="30min-1h"></el-option>
+            <el-option label="1h-2h" value="1h-2h"></el-option>
+            <el-option label="2h以上" value="2h以上"></el-option>
           </el-select>
         </el-form-item>
     </div>

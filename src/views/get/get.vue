@@ -10,27 +10,27 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="取货地址">
-      <el-input placeholder="请输入" v-model="form.region" clearable></el-input>
+      <el-input placeholder="请输入取货地址" v-model="form.region" clearable></el-input>
     </el-form-item>
     <el-form-item label="备注地址">
-      <el-input placeholder="请输入" v-model="form.place" clearable></el-input>
+      <el-input placeholder="请输入备注地址" v-model="form.place" clearable></el-input>
     </el-form-item>
     <el-form-item label="取货电话">
-      <el-input placeholder="请输入" v-model="form.phone" clearable></el-input>
+      <el-input placeholder="请输入取货电话" v-model="form.phone" clearable></el-input>
     </el-form-item>
     <div class="bottom">
         <el-form-item label="收货地址">
-            <el-input placeholder="请输入" v-model="form.buyPlace" clearable></el-input>
+            <el-input placeholder="请输入收货地址" v-model="form.buyPlace" clearable></el-input>
         </el-form-item>
         <el-form-item label="备注地址">
-            <el-input placeholder="请输入" v-model="form.place2" clearable></el-input>
+            <el-input placeholder="请输入备注地址" v-model="form.place2" clearable></el-input>
         </el-form-item>
         <el-form-item label="收货电话">
-            <el-input placeholder="请输入" v-model="form.number" clearable></el-input>
+            <el-input placeholder="请输入收货电话" v-model="form.number" clearable></el-input>
         </el-form-item>
     </div>
     <el-form-item label="备注留言">
-      <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="form.note"></el-input>
+      <el-input type="textarea" :rows="8" placeholder="请输入备注留言" v-model="form.note"></el-input>
     </el-form-item>
     <el-form-item label="取货时间">
       <el-date-picker v-model="form.time"  type="datetime" placeholder="选择日期时间" ></el-date-picker>

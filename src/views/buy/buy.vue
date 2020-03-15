@@ -10,26 +10,26 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="收货地址">
-      <el-input placeholder="请输入" v-model="form.region" clearable></el-input>
+      <el-input placeholder="请输入收货地址" v-model="form.region" clearable></el-input>
     </el-form-item>
     <el-form-item label="备注地址">
-      <el-input placeholder="请输入" v-model="form.place" clearable></el-input>
+      <el-input placeholder="请输入备注地址" v-model="form.place" clearable></el-input>
     </el-form-item>
     <el-form-item label="收货电话">
-      <el-input placeholder="请输入" v-model="form.phone" clearable></el-input>
+      <el-input placeholder="请输入收货电话" v-model="form.phone" clearable></el-input>
     </el-form-item>
     <div class="bottom">
       <el-form-item label="购买地址">
-        <el-input placeholder="请输入" v-model="form.buyPlace" clearable></el-input>
+        <el-input placeholder="请输入购买地址" v-model="form.buyPlace" clearable></el-input>
       </el-form-item>
       <el-form-item label="备注地址">
-        <el-input placeholder="请输入" v-model="form.place2" clearable></el-input>
+        <el-input placeholder="请输入备注地址" v-model="form.place2" clearable></el-input>
       </el-form-item>
       <el-form-item label="购买要求">
-        <el-input type="textarea" :rows="6" placeholder="请输入内容" v-model="form.note"></el-input>
+        <el-input type="textarea" :rows="6" placeholder="请输入购买要求" v-model="form.note"></el-input>
       </el-form-item>
       <el-form-item label="商品价格"> 
-        <el-input placeholder="请输入" v-model="form.price" clearable></el-input>
+        <el-input placeholder="请输入商品价格" v-model="form.price" clearable></el-input>
       </el-form-item>
       <el-form-item label="购买时间">
         <el-date-picker v-model="form.time"  type="datetime" placeholder="选择日期时间" ></el-date-picker>
