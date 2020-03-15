@@ -35,8 +35,10 @@
                     <span>个人中心</span>
                   </template>
                   <el-menu-item-group>
-                    <el-menu-item index="/firstPage/myExpress">我发布的快递信息</el-menu-item>
-                    <el-menu-item index="/firstPage/myProduct">我发布的商品信息</el-menu-item>
+                    <el-menu-item index="/firstPage/myExpress">发布的代买信息</el-menu-item>
+                    <el-menu-item index="/firstPage/myProduct">发布的代送信息</el-menu-item>
+                    <el-menu-item index="/firstPage/myProduct">发布的代取信息</el-menu-item>
+                    <el-menu-item index="/firstPage/myProduct">发布的代排队信息</el-menu-item>
                     <el-menu-item index="/firstPage/userInfo">查看个人信息</el-menu-item>
                     <el-menu-item index="/firstPage/message">消息提醒</el-menu-item>
                   </el-menu-item-group>
