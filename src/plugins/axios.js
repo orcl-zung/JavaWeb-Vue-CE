@@ -2,6 +2,7 @@
 
 import Vue from 'vue';
 import axios from "axios";
+// import store from '../store/index'
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -14,12 +15,30 @@ let config = {
   // withCredentials: true, // Check cross-site Access-Control
 };
 
+// Axios.interceptors.request.use(config => {
+//   // 在发送请求之前做些什么
+//   //判断是否存在token，如果存在将每个页面header都添加token
+//   if(store.state.avatar){
+//   config.headers.common['avatar']=store.state.avatar
+//   }
+   
+//   return config;
+//   }, error => {
+//   // 对请求错误做些什么
+//   return Promise.reject(error);
+//   });
+  
+
+
 const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     // 在发送请求之前做些什么
+    // if(store.state.avatar){
+    //   config.headers.common['avatar']=store.state.avatar
+    //   }
     if (
       config.headers &&
       config.headers['Content-Type'] ==

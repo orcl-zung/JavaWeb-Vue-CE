@@ -1,67 +1,121 @@
 <template>
-<div>
-  <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
-    <el-table-column type="selection" width="120"></el-table-column>
-    <el-table-column prop="id" label="序号" width="150"></el-table-column>
-    <el-table-column prop="title" label="标题" width="250"></el-table-column>
-    <el-table-column prop="place" label="地点" width="300"></el-table-column>
-    <el-table-column prop="validTime" label="时效" width="200"></el-table-column>
-    <el-table-column  label="申请时间" width="150">
-      <template slot-scope="scope">{{ scope.row.date }}</template>
+  <el-table :data="tableData" style="width: 100%">
+    <el-table-column type="expand">
+      <template slot-scope="props">
+        <el-form label-position="left" inline class="demo-table-expand">
+          <el-form-item label="发货地址">
+            <span>{{ props.row.sendAddress }}</span>
+          </el-form-item>
+         <el-form-item label="收货地址">
+            <span>{{ props.row.shippingAddress }}</span>
+          </el-form-item>
+            <el-form-item label="发货的备注地址">
+            <span>{{ props.row.shippingNotedAddress }}</span>
+          </el-form-item>
+          <el-form-item label="收货的备注地址">
+            <span>{{ props.row.shippingNotedAddress }}</span>
+          </el-form-item>
+          <el-form-item label="收货电话">
+            <span>{{ props.row.sendPhone }}</span>
+          </el-form-item>
+          <el-form-item label="收货电话">
+            <span>{{ props.row.shippingPhone }}</span>
+          </el-form-item>
+           <el-form-item label="发货时间">
+            <span>{{ props.row.deliveryTime | time }}</span>
+          </el-form-item>
+          <el-form-item label="备注留言">
+            <span>{{ props.row.noteMessage }}</span>
+          </el-form-item>
+         
+           <el-form-item label="商品重量">
+            <span>{{ props.row.goodsWeight }}</span>
+          </el-form-item>
+           <el-form-item label="跑腿费">
+            <span>{{ props.row.runningFee }}</span>
+          </el-form-item>
+        </el-form>
+      </template>
     </el-table-column>
-    <el-table-column prop="weight" label="重量" width="150"></el-table-column>
-    <el-table-column prop="status" label="状态" width="150"></el-table-column>
-    <el-table-column prop="isFinish" label="是否完成订单" width="150"></el-table-column>
-    <!-- <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column> -->
+    <el-table-column  label="商品 ID" prop="sid"></el-table-column>
+    <el-table-column  label="购买类型" prop="sendContent"></el-table-column>
+    <el-table-column  label="申请时间" prop="applyTime"></el-table-column>
+    <el-table-column  label="状态" prop="status"></el-table-column>
+    <el-table-column  label="是否完成订单" prop="isFinish"></el-table-column>
+    <el-table-column  label="操作">
+      <template slot-scope="props">
+        <el-button  size="mini" @click="handleEdit(props.$index, props.row)">编辑</el-button>
+        <el-button size="mini" type="danger" @click="handleDelete(props.$index, props.row)">删除</el-button>
+      </template>
+    </el-table-column>
   </el-table>
-  <!-- <div style="margin-top: 20px">
-    <el-button @click="toggleSelection([tableData[1], tableData[2]])">切换第二、第三行的选中状态</el-button>
-    <el-button @click="toggleSelection()">取消选择</el-button>
-  </div> -->
-  </div>
+
 </template>
 
 <script>
+import {myPost} from '../../plugins/api' //我发布的代买
 export default {
-    name:'myPost',
-     data() {
-      return {
-        tableData: [{
-          id:1,
-          title:'衣服',
-          place:'学校',
-          validTime:'两小时',
-          date: '2016-05-03',
-          weight:'2KG',
-          status: '未完成',
-          isFinish: '未完成'
-        }],
-        multipleSelection: []
+  name:'myPost',
+  created(){
+    var id = JSON.parse(sessionStorage.getItem('id')) //用户id
+    if(id){
+      myPost({releaseUserId:id}).then(res=>{
+        var data = res.data.data
+        this.tableData = data
+        console.log(res)
+      })
+    }
+  },
+  data() {
+    return {
+      tableData: [], //用来存储所有发布信息
+      multipleSelection: [],
+
+    }
+  },
+  methods: {
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
       }
     },
-
-    methods: {
-      toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
-      },
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
-      }
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    handleEdit(index, row) {
+      console.log(index, row);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
     }
+  }
 }
 </script>
 
 <style scoped>
-.el-table--enable-row-transition .el-table__body td{
+>>>.demo-table-expand {
+    font-size: 0;
+  }
+>>>.demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+>>>.demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+>>>.demo-table-expand label{
+  width:110px
+}
+/* >>> .el-table td, .el-table th.is-leaf{
   text-align: center;
 }
-.el-table td, .el-table th.is-leaf{
-  text-align: center;
-}
+>>>.demo-table-expand{
+  text-align: left;
+} */
 </style>

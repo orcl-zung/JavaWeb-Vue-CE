@@ -15,11 +15,11 @@
       </div>
       <div class="top_bottom">
         <div class="item">
-          <span>跑腿类型：</span>
+          <!-- <span>跑腿类型：</span> -->
           <el-select v-model="kind" placeholder="跑腿类型">
-            <el-option label="代买商品" value="代买商品"></el-option>
-            <el-option label="代送物品" value="代送物品"></el-option>
-            <el-option label="代取物品" value="代取物品"></el-option>
+            <el-option label="代买" value="代买"></el-option>
+            <el-option label="代送" value="代送"></el-option>
+            <el-option label="代取" value="代取"></el-option>
             <el-option label="代排队" value="代排队"></el-option>
           </el-select>
         </div>
@@ -27,14 +27,14 @@
           <span>跑腿费：</span>
           <el-select v-model="money" placeholder="跑腿费">
             <el-option label="1~20元" value="1~20元"></el-option>
-            <el-option label="21~50元" value="21~50元"></el-option>
-            <el-option label="51~100元" value="51~100元"></el-option>
-            <el-option label="100元以上" value="100元以上"></el-option>
+            <el-option label="20~50元" value="20~50元"></el-option>
+            <el-option label="50~100元" value="50~100元"></el-option>
+            <el-option label=">100元" value=">100元"></el-option>
           </el-select>
         </div>
         <div class="item">
           <span>商品重量：</span>
-          <el-select v-model="weight" placeholder="商品重量：">
+          <el-select v-model="weight" placeholder="物品重量：">
             <el-option label="1~10千克" value="1~10千克"></el-option>
             <el-option label="11~15千克" value="11~15千克"></el-option>
             <el-option label="16~20千克" value="16~20千克"></el-option>
@@ -42,15 +42,179 @@
           </el-select>
         </div>
         <div class="item">
-          <span>购买时间：</span>
-          <el-select v-model="time" placeholder="购买时间">
-            <el-option label="30min以内" value="30min以内"></el-option>
-            <el-option label="30min-1h" value="30min-1h"></el-option>
-            <el-option label="1h-2h" value="1h-2h"></el-option>
-            <el-option label="2h以上" value="2h以上"></el-option>
-          </el-select>
+          <span>发布时间：</span>
+          <el-date-picker v-model="time" type="datetimerange"  range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </div>
       </div>
+    </div>
+    <div class="bottom">
+      <!-- 代买 -->
+      <el-table :data="tableDataBuy" style="width: 100%" v-if='isBuy'>
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-form label-position="left" inline class="demo-table-expand">
+              <el-form-item label="收货地址">
+                <span>{{ props.row.shippingAddress }}</span>
+              </el-form-item>
+              <el-form-item label="购买地址">
+                <span>{{ props.row.buyAddress }}</span>
+              </el-form-item>
+              <el-form-item label="收货的备注地址">
+                <span>{{ props.row.shippingNotedAddress }}</span>
+              </el-form-item>
+              <el-form-item label="购买的备注地址">
+                <span>{{ props.row.buyNotedAddress }}</span>
+              </el-form-item>
+              <el-form-item label="收货电话">
+                <span>{{ props.row.shippingPhone }}</span>
+              </el-form-item>
+              <el-form-item label="购买要求">
+                <span>{{ props.row.purchaseRequest }}</span>
+              </el-form-item>
+              <el-form-item label="商品价格">
+                <span>{{ props.row.commodityPrices }}</span>
+              </el-form-item>
+              <el-form-item label="购买时间">
+                <span>{{ props.row.buyTime | time}}</span>
+              </el-form-item>
+              <el-form-item label="商品重量">
+                <span>{{ props.row.goodsWeight }}</span>
+              </el-form-item>
+              <el-form-item label="跑腿费">
+                <span>{{ props.row.runningFee }}</span>
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-table-column>
+        <el-table-column  label="商品 ID" prop="bid"></el-table-column>
+        <el-table-column  label="购买类型" prop="buyContent"></el-table-column>
+        <el-table-column  label="申请时间" prop="applyTime"></el-table-column>
+        <el-table-column  label="状态" prop="status"></el-table-column>
+        <el-table-column  label="是否完成订单" prop="isFinish"></el-table-column>
+      </el-table>
+      <!-- 代取 -->
+      <el-table :data="tableDataGet" style="width: 100%" v-if='isGet'>
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-form label-position="left" inline class="demo-table-expand">
+              <el-form-item label="取货地址">
+                <span>{{ props.row.takeAddress }}</span>
+              </el-form-item>
+              <el-form-item label="收货地址">
+                <span>{{ props.row.shippingAddress }}</span>
+              </el-form-item>
+              <el-form-item label="取货的备注地址">
+                <span>{{ props.row.takeNotedAddress }}</span>
+              </el-form-item>
+              <el-form-item label="收货的备注地址">
+                <span>{{ props.row.shippingNotedAddress }}</span>
+              </el-form-item>
+              <el-form-item label="取货电话">
+                <span>{{ props.row.takePhone }}</span>
+              </el-form-item>
+              <el-form-item label="收货电话">
+                <span>{{ props.row.shippingPhone }}</span>
+              </el-form-item>
+              <el-form-item label="取货时间">
+                <span>{{ props.row.takeTime | time }}</span>
+              </el-form-item>
+              <el-form-item label="跑腿费">
+                <span>{{ props.row.runningFee }}</span>
+              </el-form-item>
+              <el-form-item label="商品重量">
+                <span>{{ props.row.goodsWeight }}</span>
+              </el-form-item>
+              <el-form-item label="备注留言">
+                <span>{{ props.row.noteMessage }}</span>
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-table-column>
+        <el-table-column  label="商品 ID" prop="tid"></el-table-column>
+        <el-table-column  label="物品类型" prop="takeContent"></el-table-column>
+        <el-table-column  label="申请时间" prop="applyTime"></el-table-column>
+        <el-table-column  label="状态" prop="status"></el-table-column>
+        <el-table-column  label="是否完成订单" prop="isFinish"></el-table-column>
+      </el-table>
+      <!-- 代送 -->
+      <el-table :data="tableDataPost" style="width: 100%" v-if='isPost'>
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-form label-position="left" inline class="demo-table-expand">
+              <el-form-item label="发货地址">
+                <span>{{ props.row.sendAddress }}</span>
+              </el-form-item>
+              <el-form-item label="收货地址">
+                <span>{{ props.row.shippingAddress }}</span>
+              </el-form-item>
+              <el-form-item label="发货的备注地址">
+                <span>{{ props.row.shippingNotedAddress }}</span>
+              </el-form-item>
+              <el-form-item label="收货的备注地址">
+                <span>{{ props.row.shippingNotedAddress }}</span>
+              </el-form-item>
+              <el-form-item label="收货电话">
+                <span>{{ props.row.sendPhone }}</span>
+              </el-form-item>
+              <el-form-item label="收货电话">
+                <span>{{ props.row.shippingPhone }}</span>
+              </el-form-item>
+              <el-form-item label="发货时间">
+                <span>{{ props.row.deliveryTime | time }}</span>
+              </el-form-item>
+              <el-form-item label="备注留言">
+                <span>{{ props.row.noteMessage }}</span>
+              </el-form-item>
+              <el-form-item label="商品重量">
+                <span>{{ props.row.goodsWeight }}</span>
+              </el-form-item>
+              <el-form-item label="跑腿费">
+                <span>{{ props.row.runningFee }}</span>
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-table-column>
+        <el-table-column  label="商品 ID" prop="sid"></el-table-column>
+        <el-table-column  label="购买类型" prop="sendContent"></el-table-column>
+        <el-table-column  label="申请时间" prop="applyTime"></el-table-column>
+        <el-table-column  label="状态" prop="status"></el-table-column>
+        <el-table-column  label="是否完成订单" prop="isFinish"></el-table-column>
+      </el-table>
+      <!-- 代排队 -->
+      <el-table :data="tableDataSort" style="width: 100%" v-if='isSort'>
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-form label-position="left" inline class="demo-table-expand">
+              <el-form-item label="排队地址">
+                <span>{{ props.row.queueAddress }}</span>
+              </el-form-item>
+              <el-form-item label="联系电话">
+                <span>{{ props.row.queueNotedAddress }}</span>
+              </el-form-item>
+              <el-form-item label="排队的备注地址">
+                <span>{{ props.row.queueNotedAddress }}</span>
+              </el-form-item>
+              <el-form-item label="排队时间">
+                <span>{{ props.row.queueTime |time}}</span>
+              </el-form-item>
+              <el-form-item label="排队时长">
+                <span>{{ props.row.queueTimeLength }}</span>
+              </el-form-item>
+              <el-form-item label="跑腿费">
+                <span>{{ props.row.runningFee }}</span>
+              </el-form-item>
+              <el-form-item label="备注留言">
+                <span>{{ props.row.noteMessage }}</span>
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-table-column>
+        <el-table-column  label="商品 ID" prop="qid"></el-table-column>
+        <el-table-column  label="排队类型" prop="queueType"></el-table-column>
+        <el-table-column  label="申请时间" prop="applyTime"></el-table-column>
+        <el-table-column  label="状态" prop="status"></el-table-column>
+        <el-table-column  label="是否完成订单" prop="isFinish"></el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
@@ -60,12 +224,23 @@ export default {
     name:'mainPage',
     data() {
       return {
+        isBuy:true,
+        isPost:false,
+        isSort:false,
+        isGet:false,
         kind: '',
         money: '',
         weight:'',
-        time:''
+        time:'',
+        tableDataBuy:[],
+        tableDataPost:[],
+        tableDataGet:[],
+        tableDataSort: [],
     }
   },
+  // created(){
+  //   console.log(this.$route.params.id)
+  // },
   methods:{
     clear:function(){
       this.kind = '',
@@ -97,6 +272,16 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.bottom{
+  width:100%;
+  border:1px solid #eee;
+  border-radius: 10px;
+  padding:20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-top:40px
+}
 .top_top{
   width:100%;
   display: flex;
@@ -117,5 +302,21 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   margin-top:20px
+}
+
+>>>.demo-table-expand {
+    font-size: 0;
+  }
+>>>.demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+>>>.demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+>>>.demo-table-expand label{
+  width:110px
 }
 </style>

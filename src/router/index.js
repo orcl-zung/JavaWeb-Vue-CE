@@ -12,8 +12,11 @@ import get from '../views/get/get.vue'
 import buy from '../views/buy/buy.vue'
 import post from '../views/post/post.vue'
 import sort from '../views/sort/sort.vue'
-import myExpress from '../views/user/myExpress.vue'
-import myProduct from '../views/user/myProduct.vue'
+import myPost from '../views/user/myPost.vue'
+import myGet from '../views/user/myGet.vue'
+import myBuy from '../views/user/myBuy.vue'
+import mySort from '../views/user/mySort.vue'
+import setting from '../views/user/setting.vue'
 import userInfo from '../views/user/userInfo.vue'
 import message from '../views/user/message.vue'
 
@@ -32,7 +35,7 @@ const routes = [
       {
         path:'login',
         name:'login',
-        redirect:'/login/passwordLogin',
+        redirect:'/index/login/passwordLogin',
         component:Login,
         children:[
           {
@@ -45,7 +48,6 @@ const routes = [
             name:'phoneLogin',
             component:phoneLogin
           }
-          
         ]
       },
       {
@@ -83,14 +85,29 @@ const routes = [
         component:sort
       },
       {
-        path:'myExpress',
-        name:'myExpress',
-        component:myExpress
+        path:'myPost',
+        name:'myPost',
+        component:myPost
       },
       {
-        path:'myProduct',
-        name:'myProduct',
-        component:myProduct
+        path:'myGet',
+        name:'myGet',
+        component:myGet
+      },
+      {
+        path:'myBuy',
+        name:'myBuy',
+        component:myBuy
+      },
+      {
+        path:'mySort',
+        name:'mySort',
+        component:mySort
+      },
+      {
+        path:'setting',
+        name:'setting',
+        component:setting
       },
       {
         path:'userInfo',
