@@ -21,8 +21,9 @@
 </template>
 
 <script>
-import {loginCode} from '../../plugins/api'
-import {getCode} from '../../plugins/api'
+import {getCode} from '../../plugins/api' //获取验证码
+import {compareCode} from '../../plugins/api' //核对验证码
+import {login} from '../../plugins/api' //登录接口
 export default {
     name:'phoneLogin',
     data(){
@@ -37,66 +38,70 @@ export default {
         }
     },
     methods: {
-        toLogin:function(){
+        // 登录
+        toLogin() {
             var that = this
-            var inputPhone = this.inputPhone //电话号码
-            var inputCode = this.inputCode //输入的验证码
-            var newCode = this.newCode //获取到的验证码
-            var getPhone = this.getPhone //获取到的手机号
-            if(!inputPhone){
+            var code = this.inputCode
+            if(!code){
                 this.$message({
-                    message: '电话号码不能为空',
-                    type: 'warning'
-                });
-                return;
-            }else if(!inputCode){
-                this.$message({
-                    message: '请输入验证码',
+                    message: '请先获取验证码',
                     type: 'warning'
                 });
                 return;
             }
-            loginCode({
-                phone:inputPhone
-            }).then(function(res){
-                var err_code = res.data.err_code
-                if(err_code == 2){
+            compareCode(code).then(function(res){
+                var data = res.data
+                if(data == 1){
                     that.$message({
-                        message: '电话号码还未注册',
+                        message: '请先获取验证码',
                         type: 'warning'
                     });
                     return;
-                }
-                if(res.data[0]){
-                    var newCode = that.newCode //获取到的验证码
-                    var inputCode = that.inputCode //输入的验证码
-                    var inputPhone = that.inputPhone //输入的手机号
-                    var getPhone = that.getPhone //获取到的手机号
-                    if(inputCode != newCode){
+                }else if(data == 2){
+                    that.$message({
+                        message: '验证码错误',
+                        type: 'error'
+                    });
+                    return;
+                }else if(data == 3){
+                    var phone = that.inputPhone //电话号码
+                    var code = that.inputCode //验证码
+                    if(!phone && !code){
                         that.$message({
-                            message: '验证码输入错误',
-                            type: 'error'
-                        });
-                        return;
-                    }
-                    if(inputPhone != getPhone){
-                        that.$message({
-                            message: '请重新获取验证码',
+                            message: '请把表单填写完整',
                             type: 'warning'
                         });
                         return;
                     }
-                    that.$message({
-                        message: '登录成功',
-                        type: 'success'
-                    });
-                    that.$router.push({path:'/firstPage'})
+                    login({userPhone:phone}).then(function(res){
+                        var code = res.data.code
+                        var id = res.data.data.userId
+                        var avatar = res.data.data.userAvatar
+                        if(id){
+                            sessionStorage.setItem('id',JSON.stringify(id)); // 存入用户id
+                            that.$store.commit('changeAvatar', avatar) //登陆后更新缓存数据，展示用户头像
+                        }
+                        if(code == 'ok'){
+                            that.$message({
+                                message: '登录成功',
+                                type: 'success'
+                            });
+                        }else{
+                            that.$message({
+                                message: '登录失败',
+                                type: 'success'
+                            });
+                            that.$router.push({path:'/'}) 
+                        }
+                            console.log(res)
+                    }).catch(function(res){
+                            console.log(res)
+                    })
                 }
                 console.log(res)
-            }).catch(function(res){
-                console.log(res)
-            }) 
+            })
         },
+        //获取验证码
         getCode:function(){
             var that = this
             const num = 60;
@@ -113,25 +118,28 @@ export default {
                     }
                 }, 1000)
             }
+            var phone = this.inputPhone //输入的电话号码
+            if(!phone){
+                this.$message({
+                    message: '电话号码不能为空',
+                    type: 'warning'
+                });
+                return;
+            }
             //发送验证码
-            getCode({
-                phone:that.inputPhone, //输入的验证码
-            }).then(function(res){
-                if(res.data.msg == 'ok'){
+            getCode(phone).then(function(res){
+                var data = res.data
+                if(data == 1){
                     that.$message({
                         message: '验证码发送成功',
                         type: 'success'
                     });
-                    var newCode = res.data.code //接收到的验证码
-                    var getPhone = res.data.phone //收验证码的电话号码
-                    that.newCode = newCode
-                    that.getPhone = getPhone
-                }else{
+                } else{
                     that.$message({
                         message: '验证码发送失败',
                         type: 'error'
                     });
-                }  
+                } 
                 console.log(res)
             }).catch(function(res){
                 console.log(res)

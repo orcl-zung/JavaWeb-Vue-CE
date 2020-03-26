@@ -8,41 +8,54 @@
         <div class="select">
           <el-menu :default-active="this.$route.path" :router="true" :unique-opened="true" class="el-menu-vertical-demo" 
           @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff"  active-text-color="#ffd04b" :collapse="isCollapse">
-                <el-menu-item index="/firstPage/mainPage">
-                  <i class="el-icon-s-home"></i>
-                  <span slot="title">主页</span>
-                </el-menu-item>
-                <el-menu-item index="/firstPage/buy">
-                  <i class="el-icon-s-shop"></i>
-                  <span slot="title">代买商品</span>
-                </el-menu-item>
-                <el-menu-item index="/firstPage/post">
-                  <i class="el-icon-goods"></i>
-                  <span slot="title">代送物品</span>
-                </el-menu-item>
-            
-                <el-menu-item index="/firstPage/get">
-                  <i class="el-icon-s-claim"></i>
-                  <span slot="title">代取物品</span>
-                </el-menu-item>
-                <el-menu-item index="/firstPage/sort">
-                  <i class="el-icon-s-data"></i>
-                  <span slot="title">代排队</span>
-                </el-menu-item>
-                <el-submenu index="3">
-                  <template slot="title">
-                    <i class="el-icon-user-solid"></i>
-                    <span>个人中心</span>
-                  </template>
-                  <el-menu-item-group>
-                    <el-menu-item index="/firstPage/myExpress">发布的代买信息</el-menu-item>
-                    <el-menu-item index="/firstPage/myProduct">发布的代送信息</el-menu-item>
-                    <el-menu-item index="/firstPage/myProduct">发布的代取信息</el-menu-item>
-                    <el-menu-item index="/firstPage/myProduct">发布的代排队信息</el-menu-item>
-                    <el-menu-item index="/firstPage/userInfo">查看个人信息</el-menu-item>
-                    <el-menu-item index="/firstPage/message">消息提醒</el-menu-item>
-                  </el-menu-item-group>
-                </el-submenu>
+            <el-menu-item index="/firstPage/mainPage">
+              <i class="el-icon-s-home"></i>
+              <span slot="title">首页</span>
+            </el-menu-item>
+            <el-menu-item index="/firstPage/buy">
+              <i class="el-icon-s-shop"></i>
+              <span slot="title">代买商品</span>
+            </el-menu-item>
+            <el-menu-item index="/firstPage/post">
+              <i class="el-icon-goods"></i>
+              <span slot="title">代送物品</span>
+            </el-menu-item>
+            <el-menu-item index="/firstPage/get">
+              <i class="el-icon-s-claim"></i>
+              <span slot="title">代取物品</span>
+            </el-menu-item>
+            <el-menu-item index="/firstPage/sort">
+              <i class="el-icon-s-data"></i>
+              <span slot="title">代排队</span>
+            </el-menu-item>
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-user-solid"></i>
+                <span>个人中心</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="/firstPage/myBuy">发布的代买信息</el-menu-item>
+                <el-menu-item index="/firstPage/myPost">发布的代送信息</el-menu-item>
+                <el-menu-item index="/firstPage/myGet">发布的代取信息</el-menu-item>
+                <el-menu-item index="/firstPage/mySort">发布的代排队信息</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="4">
+              <template slot="title">
+                <i class="el-icon-warning-outline"></i>
+                <span>跑腿审核</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="/firstPage/checkBuy">代买信息</el-menu-item>
+                <el-menu-item index="/firstPage/checkPost">代送信息</el-menu-item>
+                <el-menu-item index="/firstPage/checkGet">代取信息</el-menu-item>
+                <el-menu-item index="/firstPage/checkSort">代排队信息</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-menu-item index="/firstPage/userManager">
+              <i class="el-icon-menu"></i>
+              <span slot="title">用户管理</span>
+            </el-menu-item>
           </el-menu>
         </div>
       </div>
@@ -58,9 +71,23 @@
           <span class="firstPage">{{title}}</span>
         </div>
         <el-row>
-          <div class="block"><el-avatar :size="50" :src="avatar"></el-avatar></div>
-          <el-link type="primary" @click="toLogin">登录</el-link>
-          <el-link type="info" @click="toRegister">注册</el-link>
+          <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect"  :default-active="this.$route.path" :router="true" :unique-opened="true" >
+            <el-submenu index="1" id="other">
+              <template slot="title">
+                <div class="block"><el-avatar :size="50" :src="$store.state.avatar" fit='contain'></el-avatar></div>
+              </template>
+              <el-menu-item index="/firstPage/userInfo" v-if="id">
+                <i class="el-icon-user"></i>个人信息</el-menu-item>
+              <el-menu-item index="/firstPage/message" v-if="id">
+                <i class="el-icon-bell"></i>消息提醒</el-menu-item>
+              <el-menu-item index="/firstPage/setting" v-if="id">
+                <i class="el-icon-setting"></i>设置</el-menu-item>
+              <el-menu-item index="/firstPage/quit" @click="quit">
+                <i class="el-icon-switch-button"></i>退出</el-menu-item>
+            </el-submenu>
+          </el-menu>
+          <el-link type="primary" @click="toLogin" v-show='!id'>登录</el-link>
+          <el-link type="info" @click="toRegister" v-show='!id'>注册</el-link>
         </el-row>
       </el-header>
       <el-main>
@@ -75,19 +102,25 @@ export default {
   name:'firstPage',
   data() {
     return {
+      id:'', //用户id
       title:'',
-      isCollapse: false,
+      isCollapse: false, //是否折叠
       activeIndex: "",
-      avatar: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      // avatar: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png", //头像
     };
   },
   watch: {
     $route: "watchRoute"
   },
-  // created(){
-  //   var path = this.$route
-  //   console.log(path)
-  // },
+  created(){
+    var id = JSON.parse(sessionStorage.getItem('id')) //用户id
+    // var src = JSON.parse(sessionStorage.getItem('avatar')) //用户id
+    if(id){
+      this.id = id
+    }
+    console.log(this.id)
+      //  console.log(src)
+  },
   mounted() {
     this.watchRoute();
   },
@@ -103,22 +136,41 @@ export default {
         this.title = '代取物品'
       }else if(path == '/firstPage/sort'){
         this.title = '代排队'
-      }else if(path == '/firstPage/myExpress'){
-        this.title = '个人中心 / 我发布的快递信息'
-      }else if(path == '/firstPage/myProduct'){
-        this.title = '个人中心 / 我发布的商品信息'
+      }else if(path == '/firstPage/myBuy'){
+        this.title = '个人中心 / 发布的代买信息'
+      }else if(path == '/firstPage/myPost'){
+        this.title = '个人中心 / 发布的代送信息'
+      }else if(path == '/firstPage/myGet'){
+        this.title = '个人中心 / 发布的代取信息'
+      }else if(path == '/firstPage/mySort'){
+        this.title = '个人中心 / 发布的代排队信息'
+      }else if(path == '/firstPage/mainPage'){
+        this.title = '首页'
       }else if(path == '/firstPage/userInfo'){
-        this.title = '个人中心 / 查看个人信息'
+        this.title = '个人信息'
+      }else if(path == '/firstPage/setting'){
+        this.title = '设置'
       }else if(path == '/firstPage/message'){
         this.title = '消息提醒'
-      }else if(path == '/firstPage/mainPage'){
-        this.title = '主页'
+      }else if(path == '/firstPage/checkBuy'){
+        this.title = '跑腿审核 / 代买信息'
+      }else if(path == '/firstPage/checkPost'){
+        this.title = '跑腿审核 / 代送信息'
+      }else if(path == '/firstPage/checkGet'){
+        this.title = '跑腿审核 / 代取信息'
+      }else if(path == '/firstPage/checkSort'){
+        this.title = '跑腿审核 / 代排队信息'
+      }else if(path == '/firstPage/userManager'){
+        this.title = '用户管理'
       }
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
     // 登录
@@ -134,6 +186,9 @@ export default {
     },
     fold:function(){
       this.isCollapse = true
+    },
+    quit:function(){
+      this.$router.push({path:'/index/login'})
     }
   }
 }
@@ -289,5 +344,17 @@ export default {
   margin-left:10px;
   color:white;
   font-size: 18px;
+}
+>>>#other .el-submenu__title i{
+  display: none;
+}
+>>>.el-menu--horizontal>.el-submenu{
+  background-color: rgb(84, 92, 100);
+}
+>>>.el-menu--horizontal>.el-submenu.is-active .el-submenu__title{
+  border-bottom: none;
+}
+>>>.el-menu--horizontal>.el-submenu:hover{
+  background-color: rgb(84, 92, 100);
 }
 </style>

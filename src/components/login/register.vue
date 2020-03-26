@@ -54,6 +54,7 @@
 import {isvalidPhone} from '../../config/validate' //验证手机号码
 import {register} from '../../plugins/api' //注册接口
 import {getCode} from '../../plugins/api' //获取验证码
+import {compareCode} from '../../plugins/api' //核对验证码
 export default { 
     name:'register',
     data() {
@@ -172,72 +173,85 @@ export default {
     },
     methods:{
         toLogin:function(){
-            this.$router.push({path:'/'})
+            this.$router.push({path:'/index/login'})
         },
         // 表单提交
         onSubmit() {
             var that = this
-            var data = this.form
-            var name = data.name //用户名
-            var age = data.age //年龄
-            var gender = data.gender //用户性别
-            var trueName = data.trueName //真实姓名
-            var phone = data.phone //电话号码
-            var pas = data.password //密码
-            var aginPas = data.aginPas //确认密码
-            var code = data.code //用户输入的验证码
-            var newCode = this.newCode //后台获取的验证码
-            var getPhone = this.getPhone //获取验证码的手机号
-            if(!name && !age && !gender && !pas && !aginPas && !trueName && !phone && !code){
+            var code = this.form.code
+            if(!code){
                 this.$message({
-                    message: '请把表单填写完整',
+                    message: '请先获取验证码',
                     type: 'warning'
                 });
                 return;
             }
-            if(pas != aginPas){
-                this.$message.error('两次输入的密码不一致，请重新输入');
-                return;
-            }else if(code != newCode){
-                this.$message.error('验证码输入错误');
-                return;
-            }else if(getPhone != phone){
-                this.$message.error('请重新获取验证码');
-                return;
-            }
-            register({
-                userName:data.name,
-                userAge:data.age,
-                userGender:data.gender,
-                userPassword:data.password,
-                userRealName:data.trueName,
-                userPhone:data.phone,
-            }).then(function(res){
-                var err_code = res.data.err_code
-                if(err_code == 0){
-                    that.$message({
-                        message: '恭喜你，注册成功',
-                        type: 'success'
-                    });
-                    that.$router.push({path:'/'})
-                }else if(err_code == 1){
-                    that.$message({
-                        message: '用户名已存在',
+            compareCode(code).then(function(res){
+                var data = res.data
+                if(data == 1){
+                    this.$message({
+                        message: '请先获取验证码',
                         type: 'warning'
                     });
-                }else if(err_code == 2){
-                    that.$message({
-                        message: '号码已被注册',
-                        type: 'warning'
-                    });
-                }else{
-                    that.$message({
-                        message: '注册失败',
+                    return;
+                }else if(data == 2){
+                    this.$message({
+                        message: '验证码错误',
                         type: 'error'
                     });
+                    return;
+                }else if(data == 3){
+                    var name = that.form.name //用户名
+                    var age = that.form.age //年龄
+                    var gender = that.form.gender //用户性别
+                    var trueName = that.form.trueName //真实姓名
+                    var phone = that.form.phone //电话号码
+                    var pas = that.form.password //密码
+                    var aginPas = that.form.aginPas //确认密码
+                    var code = that.form.code //用户输入的验证码
+                    if(!name && !age && !gender && !pas && !aginPas && !trueName && !phone && !code){
+                        this.$message({
+                            message: '请把表单填写完整',
+                            type: 'warning'
+                        });
+                        return;
+                    }
+                    if(pas != aginPas){
+                        this.$message.error('两次输入的密码不一致，请重新输入');
+                        return;
+                    }
+                    register({
+                        userName:name,
+                        userAge:age,
+                        userGender:gender,
+                        userPassword:pas,
+                        userRealName:trueName,
+                        userPhone:phone,
+                    }).then(function(res){
+                        var code = res.data.code
+                        var message = res.data.message
+                        if(code == 'ok'){
+                            that.$message({
+                                message: '恭喜你，注册成功',
+                                type: 'success'
+                            });
+                            that.$router.push({path:'/index/login'})
+                        }else if(code == 'error' && message == '该手机号已被注册') {
+                            that.$message({
+                                message: '该手机号码已经被注册',
+                                type: 'warning'
+                            });
+                        }else{
+                            that.$message({
+                                message: '注册失败',
+                                type: 'error'
+                            });
+                        }
+                        console.log(res)
+                    }).catch(function(res){
+                        console.log(res)
+                    })
                 }
-                console.log(res)
-            }).catch(function(res){
                 console.log(res)
             })
         },
@@ -258,25 +272,29 @@ export default {
                     }
                 }, 1000)
             }
+            var phone = this.form.phone
+            console.log(phone)
+            if(!phone){
+                this.$message({
+                    message: '电话号码不能为空',
+                    type: 'warning'
+                });
+                return;
+            }
             //发送验证码
-            getCode({
-                phone:that.form.phone,
-            }).then(function(res){
-                if(res.data.msg == 'ok'){
+            getCode(phone).then(function(res){
+                var data = res.data
+                if(data == 1){
                     that.$message({
                         message: '验证码发送成功',
                         type: 'success'
                     });
-                    var newCode = res.data.code //接收到的验证码
-                    var getPhone = res.data.phone //收验证码的电话号码
-                    that.newCode = newCode
-                    that.getPhone = getPhone
-                }else{
+                } else{
                     that.$message({
                         message: '验证码发送失败',
                         type: 'error'
                     });
-                }  
+                } 
                 console.log(res)
             }).catch(function(res){
                 console.log(res)
