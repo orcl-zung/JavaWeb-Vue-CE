@@ -16,7 +16,6 @@ import myPost from '../views/user/myPost.vue'
 import myGet from '../views/user/myGet.vue'
 import myBuy from '../views/user/myBuy.vue'
 import mySort from '../views/user/mySort.vue'
-<<<<<<< HEAD
 import setting from '../views/user/setting.vue' //设置
 import userInfo from '../views/user/userInfo.vue' //用户信息
 import message from '../views/user/message.vue' //消息提醒
@@ -25,11 +24,9 @@ import checkBuy from '../views/check/buy.vue'
 import checkPost from '../views/check/post.vue'
 import checkGet from '../views/check/get.vue'
 import checkSort from '../views/check/sort.vue'
-=======
 import setting from '../views/user/setting.vue'
 import userInfo from '../views/user/userInfo.vue'
 import message from '../views/user/message.vue'
->>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
 
 Vue.use(VueRouter)
 
@@ -96,7 +93,6 @@ const routes = [
         component:sort
       },
       {
-<<<<<<< HEAD
         path:'checkBuy',
         name:'checkBuy',
         component:checkBuy
@@ -122,13 +118,11 @@ const routes = [
         component:myPost
       },
       {
-=======
         path:'myPost',
         name:'myPost',
         component:myPost
       },
       {
->>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
         path:'myGet',
         name:'myGet',
         component:myGet
