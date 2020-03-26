@@ -17,6 +17,7 @@
          
       </div>
     </div>
+<<<<<<< HEAD
     <div class="bottom">
       <div class="top_top">
         <span>修改密码</span>
@@ -42,12 +43,15 @@
          
       </div>
     </div>
+=======
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
   </div>
 </template>
 
 <script>
 import {updatePassword} from '../../plugins/api' //修改密码
 export default {
+<<<<<<< HEAD
   name:'setting',
   data(){
     var validateOldPassword = (rule, value, callback) => {
@@ -139,6 +143,9 @@ export default {
       this.form = {}
     }
   }
+=======
+  name:'setting'
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
 }
 </script>
 
@@ -149,14 +156,22 @@ a{
 }
 .box{
   width:100%;
+<<<<<<< HEAD
   height:100vh;
   padding:20px;
+=======
+  height:100%;
+  padding:10px;
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
   background-color: #fff;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+<<<<<<< HEAD
   /* align-items: center; */
   /* justify-content: center; */
+=======
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
 }
 .top{
   width:50%;
@@ -165,6 +180,7 @@ a{
   border-radius: 10px;
   padding:15px 25px;
 }
+<<<<<<< HEAD
 .bottom{
   width:50%;
   border:1px solid #eee;
@@ -172,6 +188,8 @@ a{
   padding:15px 25px;
   margin-top:30px
 }
+=======
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
 .top_top{
   font-size: 18px;
   font-weight: bold;
@@ -194,10 +212,13 @@ a{
 .opt{
   margin-left:30px
 }
+<<<<<<< HEAD
 .bottomBtn{
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
+=======
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
 </style>
