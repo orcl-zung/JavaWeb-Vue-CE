@@ -24,6 +24,9 @@ import checkBuy from '../views/check/buy.vue'
 import checkPost from '../views/check/post.vue'
 import checkGet from '../views/check/get.vue'
 import checkSort from '../views/check/sort.vue'
+import setting from '../views/user/setting.vue'
+import userInfo from '../views/user/userInfo.vue'
+import message from '../views/user/message.vue'
 
 Vue.use(VueRouter)
 
@@ -108,6 +111,11 @@ const routes = [
         path:'checkSort',
         name:'checkSort',
         component:checkSort
+      },
+      {
+        path:'myPost',
+        name:'myPost',
+        component:myPost
       },
       {
         path:'myPost',

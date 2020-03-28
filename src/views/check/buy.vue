@@ -47,6 +47,8 @@
         <template slot-scope="props">
           <el-button size="mini" @click="handlePass(props.$index, props.row)">通过</el-button>
           <el-button size="mini" type="danger" @click="handleunPass(props.$index, props.row)">不通过</el-button>
+          <el-button size="mini" @click="handleEdit(props.$index, props.row)">通过</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(props.$index, props.row)">不通过</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -98,6 +100,7 @@
         <template slot-scope="props">
           <!-- <el-button size="mini" @click="handleEdit(props.$index, props.row)">通过</el-button> -->
           <el-button size="mini" type="danger" @click="delete(props.$index, props.row)">删除</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(props.$index, props.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -148,7 +151,7 @@
       <el-table-column  label="操作">
         <template slot-scope="props">
           <!-- <el-button size="mini" @click="handleEdit(props.$index, props.row)">通过</el-button> -->
-          <el-button size="mini" type="danger" @click="handleDeletes(props.$index, props.row)">删除</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(props.$index, props.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -159,227 +162,130 @@
 </template>
 
 <script>
-import {unpassBuy} from '../../plugins/api' //审核不通过
-import {passBuy} from '../../plugins/api' //审核通过
 import {uncheckBuy} from '../../plugins/api' //管理员未审核订单
 import {checkPasBuy} from '../../plugins/api' //管理员审核通过订单
 import {checkunPasBuy} from '../../plugins/api' //管理员审核未通过订单
 export default {
-  name:'buy',
-  data(){
-    return{
-      activeName: 'first',
-      tableData: [], //未审核
-      tableDataTwo:[], //审核通过
-      tableDataThree:[], //审核未通过
-      multipleSelection: [],
-    }
-  },
-  created(){
-    var that = this
-    //未审核的信息
-    uncheckBuy().then(res=>{
-      if(res.data.code == 'ok'){
-        var data  = res.data.data
-        that.tableData = data
-      }else{
-        that.$message({
+    name:'buy',
+    data(){
+      return{
+        activeName: 'first',
+        tableData: [], //未审核
+        tableDataTwo:[], //审核通过
+        tableDataThree:[], //审核未通过
+        multipleSelection: [],
+      }
+    },
+    created(){
+      var that = this
+      uncheckBuy().then(res=>{
+        if(res.data.code == 'ok'){
+          var data  = res.data.data
+          that.tableData = data
+        }else{
+          that.$message({
             type: 'error',
             message: '获取订单信息失败'
           });
-      }
-      console.log(res)
-    })
-  },
-  methods: {
-    //点击tab
-    handleClick(tab, event) {
-      var that = this
-      var name = tab.name
-      if(name == 'first'){
-        //未审核
-        uncheckBuy().then(res=>{
-          if(res.data.code == 'ok'){
-            var data  = res.data.data
-            that.tableData = data
-          }else{
-            that.$message({
-              type: 'error',
-              message: '获取订单信息失败'
-            });
-          }
-          console.log(res)
-        })
-      }else if(name == 'second'){
-        //审核通过
-        checkPasBuy().then(function(res){
-          if(res.data.code == 'ok'){
-            var data = res.data.data
-            that.tableDataTwo = data
-          }else{
-            that.$message({
-              type: 'error',
-              message: '获取用户信息失败'
-            });
-          }
-        })
-      }else if(name == 'third'){
-        //审核未通过
-        checkunPasBuy().then(function(res){
-          if(res.data.code == 'ok'){
-            var data = res.data.data
-            that.tableDataThree = data
-          }else{
-            that.$message({
-              type: 'error',
-              message: '获取用户信息失败'
-            });
-          }
-          console.log(res)
-        })
-      }
-      console.log(tab.name);
+        }
+        console.log(res)
+      })
     },
-    toggleSelection(rows) {
-      if (rows) {
-        rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row);
+    methods: {
+      //点击tab
+      handleClick(tab, event) {
+        var that = this
+        var name = tab.name
+        if(name == 'first'){
+          //未审核
+          uncheckBuy().then(res=>{
+            if(res.data.code == 'ok'){
+              var data  = res.data.data
+              that.tableData = data
+            }else{
+              that.$message({
+                type: 'error',
+                message: '获取订单信息失败'
+              });
+            }
+            console.log(res)
+          })
+        }else if(name == 'second'){
+          //审核通过
+          checkPasBuy().then(function(res){
+            if(res.data.code == 'ok'){
+              var data = res.data.data
+              that.tableDataTwo = data
+            }else{
+              that.$message({
+                type: 'error',
+                message: '获取用户信息失败'
+              });
+            }
+          })
+        }else if(name == 'third'){
+          //审核未通过
+          checkunPasBuy().then(function(res){
+            if(res.data.code == 'ok'){
+              var data = res.data.data
+              that.tableDataThree = data
+            }else{
+              that.$message({
+                type: 'error',
+                message: '获取用户信息失败'
+              });
+            }
+            console.log(res)
+          })
+        }
+        console.log(tab.name);
+      },
+      toggleSelection(rows) {
+        if (rows) {
+            rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+            });
+        } else {
+            this.$refs.multipleTable.clearSelection();
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      handleEdit(index, row) {
+        console.log(index, row);
+      },
+      handleDelete(index, row) {
+        var that = this
+        var userid = row.userId
+        this.$confirm('确定删除该用户?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteUser({userId:userid}).then(function(res){
+            if(res.data.code == 'ok'){
+              that.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+            }else{
+              that.$message({
+                type: 'error',
+                message: '操作失败，请稍后尝试'
+              });
+            }
+            console.log(res)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
         });
-      } else {
-        this.$refs.multipleTable.clearSelection();
+        
+        console.log(row.userId);
       }
-    },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-
-    //通过审核
-    handlePass(index, row) {
-      var that = this
-      var userid = JSON.parse(sessionStorage.getItem('id')) //用户id
-      var id = row.bid
-      this.$confirm('确定通过该信息的审核吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        passBuy({
-          releaseUserId:userid,
-          bid:id
-        }).then(function(res){
-          if(res.data.code == 'ok'){
-            that.$message({
-              type: 'success',
-              message: '审核完成'
-            }); 
-            //未审核的信息
-            uncheckBuy().then(res=>{
-              if(res.data.code == 'ok'){
-                var data  = res.data.data
-                that.tableData = data
-              }else{
-                that.$message({
-                    type: 'error',
-                    message: '获取订单信息失败'
-                  });
-              }
-              console.log(res)
-            }) 
-          }else{
-            that.$message({
-              type: 'error',
-              message: '审核失败'
-            });  
-          }
-          console.log(res)
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消审核'
-        });          
-      });
-    },
-
-    //不通过审核
-    handleunPass(index, row) {
-      var that = this
-      var userid = JSON.parse(sessionStorage.getItem('id')) //用户id
-      var id = row.bid
-      this.$confirm('确定不通过该信息的审核吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        unpassBuy({
-          releaseUserId:userid,
-          bid:id
-        }).then(function(res){
-          if(res.data.code == 'ok'){
-            that.$message({
-              type: 'success',
-              message: '审核完成'
-            });  
-            //未审核的信息
-            uncheckBuy().then(res=>{
-              if(res.data.code == 'ok'){
-                var data  = res.data.data
-                that.tableData = data
-              }else{
-                that.$message({
-                    type: 'error',
-                    message: '获取订单信息失败'
-                  });
-              }
-              console.log(res)
-            })
-          }else{
-            that.$message({
-              type: 'error',
-              message: '审核失败'
-            });  
-          }
-          console.log(res)
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消审核'
-        });          
-      });
-    },
-    
-
-    handleDelete(index, row) {
-      var that = this
-      var userid = row.userId
-      this.$confirm('确定删除该用户?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        deleteUser({userId:userid}).then(function(res){
-          if(res.data.code == 'ok'){
-            that.$message({
-              type: 'success',
-              message: '删除成功!'
-            });
-          }else{
-            that.$message({
-              type: 'error',
-              message: '操作失败，请稍后尝试'
-            });
-          }
-          console.log(res)
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });          
-      });
-      console.log(row.userId);
-    }
   }
 }
 </script>

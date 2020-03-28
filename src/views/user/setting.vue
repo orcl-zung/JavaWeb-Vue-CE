@@ -17,6 +17,10 @@
          
       </div>
     </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
     <div class="bottom">
       <div class="top_top">
         <span>修改密码</span>
@@ -42,12 +46,21 @@
          
       </div>
     </div>
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
   </div>
 </template>
 
 <script>
 import {updatePassword} from '../../plugins/api' //修改密码
 export default {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
   name:'setting',
   data(){
     var validateOldPassword = (rule, value, callback) => {
@@ -139,6 +152,12 @@ export default {
       this.form = {}
     }
   }
+<<<<<<< HEAD
+=======
+=======
+  name:'setting'
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
 }
 </script>
 
@@ -149,14 +168,32 @@ a{
 }
 .box{
   width:100%;
+<<<<<<< HEAD
   height:100vh;
   padding:20px;
+=======
+<<<<<<< HEAD
+  height:100vh;
+  padding:20px;
+=======
+  height:100%;
+  padding:10px;
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
   background-color: #fff;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+<<<<<<< HEAD
   /* align-items: center; */
   /* justify-content: center; */
+=======
+<<<<<<< HEAD
+  /* align-items: center; */
+  /* justify-content: center; */
+=======
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
 }
 .top{
   width:50%;
@@ -165,6 +202,10 @@ a{
   border-radius: 10px;
   padding:15px 25px;
 }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
 .bottom{
   width:50%;
   border:1px solid #eee;
@@ -172,6 +213,11 @@ a{
   padding:15px 25px;
   margin-top:30px
 }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
 .top_top{
   font-size: 18px;
   font-weight: bold;
@@ -194,10 +240,19 @@ a{
 .opt{
   margin-left:30px
 }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
 .bottomBtn{
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
 </style>

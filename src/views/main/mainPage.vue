@@ -39,11 +39,29 @@
         <div class="item">
           <span>商品重量：</span>
           <el-select v-model="weight" placeholder="物品重量：">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
             <el-option label="1~10kg" value="1~10kg"></el-option>
             <el-option label="10~15kg" value="10~15kg"></el-option>
             <el-option label="15~20kg" value="15~20kg"></el-option>
             <el-option label="20kg以上" value="20kg以上"></el-option>
           </el-select>
+<<<<<<< HEAD
+=======
+=======
+            <el-option label="1~10千克" value="1~10千克"></el-option>
+            <el-option label="11~15千克" value="11~15千克"></el-option>
+            <el-option label="16~20千克" value="16~20千克"></el-option>
+            <el-option label="20千克以上" value="20千克以上"></el-option>
+          </el-select>
+        </div>
+        <div class="item">
+          <span>发布时间：</span>
+          <el-date-picker v-model="time" type="datetimerange"  range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
         </div>
         
       </div>
@@ -221,7 +239,10 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import {allBuyInfo} from '../../plugins/api' //所有代买
+=======
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
 import {searchBuy} from '../../plugins/api' //搜索代买
 import {searchPost} from '../../plugins/api' //搜索代送
 import {searchGet} from '../../plugins/api' //搜索代取
@@ -244,6 +265,7 @@ export default {
         tableDataSort: [],
     }
   },
+<<<<<<< HEAD
   created(){
     var that = this
     allBuyInfo().then(function(res){
@@ -252,6 +274,11 @@ export default {
       console.log(data)
     })
   },
+=======
+  // created(){
+  //   console.log(this.$route.params.id)
+  // },
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
   methods:{
     //重置
     clear:function(){

@@ -84,6 +84,19 @@ export default {
                         var avatar = res.data.data.userAvatar
                         sessionStorage.setItem('id',JSON.stringify(id)); // 存入用户id
                         that.$store.commit('changeAvatar', avatar) //登陆后更新缓存数据，展示用户头像
+                    var id = res.data.data.userId
+                    var avatar = res.data.data.userAvatar
+                    console.log(avatar)
+                    if(id){
+                        sessionStorage.setItem('id',JSON.stringify(id)); // 存入用户id
+                        that.$store.commit('changeAvatar', avatar) //登陆后更新缓存数据，展示用户头像
+                    }
+                    if(code == 'error'){
+                        that.$message({
+                            message: '用户名不存在或密码错误',
+                            type: 'error'
+                        });
+                    }else if(code == 'ok'){
                         that.$message({
                             message: '登录成功',
                             type: 'success'

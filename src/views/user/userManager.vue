@@ -105,8 +105,8 @@
         <el-table-column  label="用户真实姓名" prop="userRealName"></el-table-column>
         <el-table-column  label="操作">
           <template slot-scope="props">
-            <!-- <el-button size="mini" @click="handleEdit(props.$index, props.row)">编辑</el-button> -->
-            <el-button size="mini" type="danger" @click="handleDelete(props.$index, props.row)">恢复</el-button>
+            <el-button size="mini" @click="handleEdit(props.$index, props.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(props.$index, props.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

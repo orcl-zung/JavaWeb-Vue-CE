@@ -45,8 +45,8 @@
       <el-table-column  label="是否完成订单" prop="isFinish"></el-table-column>
       <el-table-column  label="操作">
         <template slot-scope="props">
-          <el-button size="mini" @click="handlePass(props.$index, props.row)">通过</el-button>
-          <el-button size="mini" type="danger" @click="handleunPass(props.$index, props.row)">不通过</el-button>
+          <el-button size="mini" @click="handleEdit(props.$index, props.row)">通过</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(props.$index, props.row)">不通过</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -159,8 +159,6 @@
 </template>
 
 <script>
-import {unpassPost} from '../../plugins/api' //审核不通过
-import {passPost} from '../../plugins/api' //审核通过
 import {uncheckPost} from '../../plugins/api' //管理员未审核订单
 import {checkPasPost} from '../../plugins/api' //管理员审核通过订单
 import {checkunPasPost} from '../../plugins/api' //管理员审核未通过订单
@@ -191,101 +189,6 @@ export default {
       })
     },
     methods: {
-      //通过审核
-      handlePass(index, row) {
-        var that = this
-        var userid = JSON.parse(sessionStorage.getItem('id')) //用户id
-        var id = row.bid
-        this.$confirm('确定通过该信息的审核吗?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          passPost({
-            releaseUserId:userid,
-            bid:id
-          }).then(function(res){
-            if(res.data.code == 'ok'){
-              that.$message({
-                type: 'success',
-                message: '审核完成'
-              }); 
-              //未审核的信息
-              uncheckPost().then(res=>{
-                if(res.data.code == 'ok'){
-                  var data  = res.data.data
-                  that.tableData = data
-                }else{
-                  that.$message({
-                    type: 'error',
-                    message: '获取订单信息失败'
-                  });
-                }
-                console.log(res)
-              })
-            }else{
-              that.$message({
-                type: 'error',
-                message: '审核失败'
-              });  
-            }
-            console.log(res)
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消审核'
-          });          
-        });
-      },
-
-      //不通过审核
-      handleunPass(index, row) {
-        var that = this
-        var userid = JSON.parse(sessionStorage.getItem('id')) //用户id
-        var id = row.bid
-        this.$confirm('确定不通过该信息的审核吗?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          unpassPost({
-            releaseUserId:userid,
-            bid:id
-          }).then(function(res){
-            if(res.data.code == 'ok'){
-              that.$message({
-                type: 'success',
-                message: '审核完成'
-              });  
-              //未审核的信息
-              uncheckPost().then(res=>{
-                if(res.data.code == 'ok'){
-                  var data  = res.data.data
-                  that.tableData = data
-                }else{
-                  that.$message({
-                    type: 'error',
-                    message: '获取订单信息失败'
-                  });
-                }
-                console.log(res)
-              })
-            }else{
-              that.$message({
-                type: 'error',
-                message: '审核失败'
-              });  
-            }
-            console.log(res)
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消审核'
-          });          
-        });
-      },
       //点击tab
       handleClick(tab, event) {
         var that = this

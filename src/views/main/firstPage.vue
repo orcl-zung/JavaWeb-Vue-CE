@@ -8,6 +8,10 @@
         <div class="select">
           <el-menu :default-active="this.$route.path" :router="true" :unique-opened="true" class="el-menu-vertical-demo" 
           @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff"  active-text-color="#ffd04b" :collapse="isCollapse">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
             <el-menu-item index="/firstPage/mainPage">
               <i class="el-icon-s-home"></i>
               <span slot="title">首页</span>
@@ -56,6 +60,44 @@
               <i class="el-icon-menu"></i>
               <span slot="title">用户管理</span>
             </el-menu-item>
+<<<<<<< HEAD
+=======
+=======
+                <el-menu-item index="/firstPage/mainPage">
+                  <i class="el-icon-s-home"></i>
+                  <span slot="title">首页</span>
+                </el-menu-item>
+                <el-menu-item index="/firstPage/buy">
+                  <i class="el-icon-s-shop"></i>
+                  <span slot="title">代买商品</span>
+                </el-menu-item>
+                <el-menu-item index="/firstPage/post">
+                  <i class="el-icon-goods"></i>
+                  <span slot="title">代送物品</span>
+                </el-menu-item>
+            
+                <el-menu-item index="/firstPage/get">
+                  <i class="el-icon-s-claim"></i>
+                  <span slot="title">代取物品</span>
+                </el-menu-item>
+                <el-menu-item index="/firstPage/sort">
+                  <i class="el-icon-s-data"></i>
+                  <span slot="title">代排队</span>
+                </el-menu-item>
+                <el-submenu index="3">
+                  <template slot="title">
+                    <i class="el-icon-user-solid"></i>
+                    <span>个人中心</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="/firstPage/myBuy">发布的代买信息</el-menu-item>
+                    <el-menu-item index="/firstPage/myPost">发布的代送信息</el-menu-item>
+                    <el-menu-item index="/firstPage/myGet">发布的代取信息</el-menu-item>
+                    <el-menu-item index="/firstPage/mySort">发布的代排队信息</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
           </el-menu>
         </div>
       </div>
@@ -79,7 +121,15 @@
               <el-menu-item index="/firstPage/userInfo" v-if="id">
                 <i class="el-icon-user"></i>个人信息</el-menu-item>
               <el-menu-item index="/firstPage/message" v-if="id">
+<<<<<<< HEAD
                 <i class="el-icon-bell"></i>消息提醒</el-menu-item>
+=======
+<<<<<<< HEAD
+                <i class="el-icon-bell"></i>消息提醒</el-menu-item>
+=======
+                <i class="el-icon-message"></i>消息提醒</el-menu-item>
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
               <el-menu-item index="/firstPage/setting" v-if="id">
                 <i class="el-icon-setting"></i>设置</el-menu-item>
               <el-menu-item index="/firstPage/quit" @click="quit">
@@ -152,6 +202,10 @@ export default {
         this.title = '设置'
       }else if(path == '/firstPage/message'){
         this.title = '消息提醒'
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
       }else if(path == '/firstPage/checkBuy'){
         this.title = '跑腿审核 / 代买信息'
       }else if(path == '/firstPage/checkPost'){
@@ -162,6 +216,11 @@ export default {
         this.title = '跑腿审核 / 代排队信息'
       }else if(path == '/firstPage/userManager'){
         this.title = '用户管理'
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 5db1772f9706f53ae3dbc727bf5a2b2e5f92e27a
+>>>>>>> b65b59ab0d5449b2ee7bc59db5a5c251f9bad8a4
       }
     },
     handleOpen(key, keyPath) {
