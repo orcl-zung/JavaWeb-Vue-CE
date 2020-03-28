@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {loginPas} from '../../plugins/api'
+import {login} from '../../plugins/api' //登录接口
 export default {
     name:'passwordLogin',
     data() {
@@ -53,8 +53,8 @@ export default {
             var password = this.inputPassword //密码
             var checked = this.checked
             if(checked){
-                sessionStorage.setItem('name',JSON.stringify(name)); // 存入用户信息
-                sessionStorage.setItem('password',JSON.stringify(password)); // 存入用户信息
+                sessionStorage.setItem('name',JSON.stringify(name)); // 存入用户名称
+                sessionStorage.setItem('password',JSON.stringify(password)); // 存入用户密码
             }
             if(!name){
                 this.$message({
@@ -67,36 +67,30 @@ export default {
                     type: 'warning'
                 });
             }else{
-                loginPas({
-                    name:name,
-                    password:password,
-                }).then(function(res){
-                    var id = res.data[0].id
-                    sessionStorage.setItem('id',JSON.stringify(id)); // 存入用户信息
-                    console.log(res)
-                    var err_code = res.data.err_code
-                    if(res.data[0]){
+                login({userName:name,userPassword:password}).then(function(res){
+                    var code = res.data.code
+                    if(code == 'error' && res.data.message == '用户名不存在或密码错误'){
+                        that.$message({
+                            message: '用户名不存在或密码错误',
+                            type: 'error'
+                        });
+                    }else if(code == 'error' && res.data.message == '用户已被删除，请联系管理员！'){
+                        that.$message({
+                            message: '用户已被删除，请联系管理员！',
+                            type: 'warning'
+                        });
+                    }else if(code == 'ok'){
+                        var id = res.data.data.userId
+                        var avatar = res.data.data.userAvatar
+                        sessionStorage.setItem('id',JSON.stringify(id)); // 存入用户id
+                        that.$store.commit('changeAvatar', avatar) //登陆后更新缓存数据，展示用户头像
                         that.$message({
                             message: '登录成功',
                             type: 'success'
                         });
-                        that.$router.push({path:'/firstPage'})
-                    }else if(err_code == 2){
-                        that.$message({
-                            message: '用户名不存在',
-                            type: 'warning'
-                        });
-                    }else if(err_code == 3){
-                        that.$message({
-                            message: '用户名或密码错误',
-                            type: 'warning'
-                        });
-                    }else{
-                        that.$message({
-                            message: '登录失败',
-                            type: 'error'
-                        });
+                        that.$router.push({path:'/'}) 
                     }
+                    console.log(res)
                 }).catch(function(res){
                     console.log(res)
                 })

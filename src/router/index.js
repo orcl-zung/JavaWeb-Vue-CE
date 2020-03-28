@@ -12,10 +12,18 @@ import get from '../views/get/get.vue'
 import buy from '../views/buy/buy.vue'
 import post from '../views/post/post.vue'
 import sort from '../views/sort/sort.vue'
-import myExpress from '../views/user/myExpress.vue'
-import myProduct from '../views/user/myProduct.vue'
-import userInfo from '../views/user/userInfo.vue'
-import message from '../views/user/message.vue'
+import myPost from '../views/user/myPost.vue'
+import myGet from '../views/user/myGet.vue'
+import myBuy from '../views/user/myBuy.vue'
+import mySort from '../views/user/mySort.vue'
+import setting from '../views/user/setting.vue' //设置
+import userInfo from '../views/user/userInfo.vue' //用户信息
+import message from '../views/user/message.vue' //消息提醒
+import userManager from '../views/user/userManager.vue' //用户管理
+import checkBuy from '../views/check/buy.vue'
+import checkPost from '../views/check/post.vue'
+import checkGet from '../views/check/get.vue'
+import checkSort from '../views/check/sort.vue'
 
 Vue.use(VueRouter)
 
@@ -32,7 +40,7 @@ const routes = [
       {
         path:'login',
         name:'login',
-        redirect:'/login/passwordLogin',
+        redirect:'/index/login/passwordLogin',
         component:Login,
         children:[
           {
@@ -45,7 +53,6 @@ const routes = [
             name:'phoneLogin',
             component:phoneLogin
           }
-          
         ]
       },
       {
@@ -83,14 +90,49 @@ const routes = [
         component:sort
       },
       {
-        path:'myExpress',
-        name:'myExpress',
-        component:myExpress
+        path:'checkBuy',
+        name:'checkBuy',
+        component:checkBuy
       },
       {
-        path:'myProduct',
-        name:'myProduct',
-        component:myProduct
+        path:'checkPost',
+        name:'checkPost',
+        component:checkPost
+      },
+      {
+        path:'checkGet',
+        name:'checkGet',
+        component:checkGet
+      },
+      {
+        path:'checkSort',
+        name:'checkSort',
+        component:checkSort
+      },
+      {
+        path:'myPost',
+        name:'myPost',
+        component:myPost
+      },
+      {
+        path:'myGet',
+        name:'myGet',
+        component:myGet
+      },
+      {
+        path:'myBuy',
+        name:'myBuy',
+        component:myBuy
+      },
+      {
+        path:'mySort',
+        name:'mySort',
+        component:mySort
+      },
+      {
+        path:'setting',
+        name:'setting',
+        component:setting
       },
       {
         path:'userInfo',
@@ -106,7 +148,13 @@ const routes = [
         path:'get',
         name:'get',
         component:get
+      },
+      {
+        path:'userManager',
+        name:'userManager',
+        component:userManager
       }
+      
     ]
   }
 
